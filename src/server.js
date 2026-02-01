@@ -11,24 +11,32 @@ app.post("/send-email", async (req, res) => {
 
     const otp = Math.floor(100000 + Math.random() * 900000);
 
-    await sendEmail({
+    const info = await sendEmail({
       to: email,
       subject: "Your OTP Code",
       html: otpTemplate({ otp, username }),
     });
 
+    const previewUrl = info.messageId.includes("@ethereal.email")
+      ? info.previewUrl
+      : null;
+
     res.json({
       success: true,
       message: "Email sent successfully",
+      otp,
+      messageId: info.messageId,
+      previewUrl,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       success: false,
       error: error.message,
     });
   }
 });
-app.listen(3000,()=>{
-    console.log("server is running in 3000");
-});
 
+app.listen(3000, () => {
+  console.log("Server is running on 3000");
+});

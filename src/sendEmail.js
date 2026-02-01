@@ -11,11 +11,10 @@ export async function sendEmail({ to, subject, html }) {
     });
 
     console.log("Email sent:", info.messageId);
+  info.previewUrl = nodemailer.getTestMessageUrl(info) || null;
 
-    const preview = nodemailer.getTestMessageUrl(info);
-    if (preview) console.log("Preview URL:", preview);
+    return info; 
 
-    return info.messageId;
   } catch (err) {
     console.error("Error sending email:", err);
     throw err;
