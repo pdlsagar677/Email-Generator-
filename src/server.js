@@ -37,6 +37,6 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on 3000");
+app.listen(12345, () => {
+  console.log("Server is running on 12345");
 });
